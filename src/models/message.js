@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
 const Message = new Schema({
-  message: { type: String, required: true },
-  timestamp: { type: Date, required: true },
+  text: { type: String, required: true },
+  timestamp: { type: Date, required: true, default: new Date() },
   sender: { type: String, required: false },
 }, {
   collection: 'messages',

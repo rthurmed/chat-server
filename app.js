@@ -4,13 +4,21 @@ var io = require('socket.io')(http);
 require('dotenv').config()
 require('./db')
 
+const Message = require('./src/models/message');
+
 app.get('/', (req, res) => {
   res.send('<h1>Hello world</h1>');
 });
 
 io.on('connection', (socket) => {
   socket.on('write', (msg) => {
-    io.emit('message', msg)
+    const message = new Message({
+      text: msg
+    })
+    message.save((err) => {
+      if (err) return
+    })
+    io.emit('message', message)
   });
 });
 
