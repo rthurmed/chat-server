@@ -15,3 +15,4 @@ const url = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${M
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // register the models
+const Message = require('./src/models/message');
