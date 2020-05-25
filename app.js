@@ -1,6 +1,8 @@
 var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
+require('dotenv').config()
+require('./db')
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello world</h1>');
