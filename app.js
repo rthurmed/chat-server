@@ -1,8 +1,15 @@
 var app = require('express')();
 var http = require('http').createServer(app);
+var io = require('socket.io')(http);
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello world</h1>');
+});
+
+io.on('connection', (socket) => {
+  socket.on('write', (msg) => {
+    io.emit('message', msg)
+  });
 });
 
 http.listen(3000, () => {
