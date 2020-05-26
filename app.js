@@ -4,10 +4,18 @@ var io = require('socket.io')(http);
 require('dotenv').config()
 require('./db')
 
+const messagesRouter = require('./src/routes/message');
 const Message = require('./src/models/message');
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello world</h1>');
+});
+
+app.use('/messages', messagesRouter);
+
+// catch 404 and forward to error handler
+app.use((req, res) => {
+  res.status(404).send({ message: '404 not found' });
 });
 
 io.on('connection', (socket) => {
