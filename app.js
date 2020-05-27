@@ -24,7 +24,8 @@ app.use((req, res) => {
 io.on('connection', (socket) => {
   socket.on('write', (msg) => {
     const message = new Message({
-      text: msg
+      text: msg,
+      timestamp: new Date()
     })
     message.save((err) => {
       if (err) return

@@ -5,7 +5,7 @@ const { Schema, model } = mongoose;
 
 const Message = new Schema({
   text: { type: String, required: true },
-  timestamp: { type: Date, required: true, default: new Date() },
+  timestamp: { type: Date, required: true },
   sender: { type: String, required: false },
 }, {
   collection: 'messages',
