@@ -1,20 +1,25 @@
+require('dotenv-safe').config();
 var app = require('express')();
 var cors = require('cors')
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
-require('dotenv').config()
-require('./db')
+var helmet = require('helmet');
+var jwt = require('jsonwebtoken');
+var bodyParser = require('body-parser');
+var bearerToken = require('express-bearer-token');
+require('./db');
+const verifyJWT = require('./src/security/jwt').verifyJWT
 
 const messagesRouter = require('./src/routes/message');
 const Message = require('./src/models/message');
 
 app.use(cors())
+app.use(helmet())
+app.use(bodyParser.json());
+app.use(bearerToken())
 
-app.get('/', (req, res) => {
-  res.send('<h1>Hello world</h1>');
-});
+app.use('/messages', verifyJWT, messagesRouter);
 
-app.use('/messages', messagesRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res) => {
@@ -24,8 +29,7 @@ app.use((req, res) => {
 io.on('connection', (socket) => {
   socket.on('write', (msg) => {
     const message = new Message({
-      text: msg,
-      timestamp: new Date()
+      text: msg
     })
     message.save((err) => {
       if (err) return
@@ -34,6 +38,6 @@ io.on('connection', (socket) => {
   });
 });
 
-http.listen(3000, () => {
-  console.log('listening on *:3000');
+http.listen(process.env.PORT, () => {
+  console.log(`listening on *:${process.env.PORT}`);
 });
