@@ -33,7 +33,9 @@ exports.login = (req, res) => {
         if (!match) {
           res.status(400).json({ message: 'Invalid login!' });
         }
-        const token = sign(user.toObject());
+        userObj = user.toObject();
+        delete userObj.pass;
+        const token = sign(userObj);
         res.status(200).send({ auth: true, token });
       })
     });
