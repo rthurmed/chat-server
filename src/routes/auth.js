@@ -1,10 +1,12 @@
 const express = require('express');
-const { register, login, logout } = require('../controllers/authController');
+const verifyJWT = require('../security/jwt').verifyJWT
+const { register, login, logout, me } = require('../controllers/authController');
 
 const router = express.Router();
 
 router.post('/register', register);
 router.post('/login', login);
-router.get('/logout', logout);
+router.get('/logout', verifyJWT, logout);
+router.get('/me', verifyJWT, me);
 
 module.exports = router;
