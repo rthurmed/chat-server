@@ -1,6 +1,6 @@
 const { model } = require('mongoose');
 
-const Message = model('Message')
+const Message = model('Message');
 const PAGE_LENGTH = 20
 
 exports.list = (req, res) => {
@@ -8,6 +8,7 @@ exports.list = (req, res) => {
   const options = {
     page: page,
     limit: PAGE_LENGTH,
+    populate: [ 'author' ],
     sort: { timestamp: 'desc' },
     customLabels: { docs: 'list' }
   }
