@@ -16,3 +16,4 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // register the models
 const Message = require('./src/models/message');
+const User = require('./src/models/user');

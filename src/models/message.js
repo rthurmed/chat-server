@@ -5,7 +5,7 @@ const { Schema, model } = mongoose;
 
 const Message = new Schema({
   text: { type: String, required: true },
-  sender: { type: String, required: false },
+  author: { type: Schema.Types.ObjectId, ref: 'User' , required: true }
 }, {
   collection: 'messages',
   timestamps: true
