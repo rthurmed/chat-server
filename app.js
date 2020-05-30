@@ -11,6 +11,8 @@ require('./db');
 const verifyJWT = require('./src/security/jwt').verifyJWT
 
 const messagesRouter = require('./src/routes/message');
+const authRouter = require('./src/routes/auth');
+
 const Message = require('./src/models/message');
 
 app.use(cors())
@@ -19,7 +21,7 @@ app.use(bodyParser.json());
 app.use(bearerToken())
 
 app.use('/messages', verifyJWT, messagesRouter);
-
+app.use('/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res) => {

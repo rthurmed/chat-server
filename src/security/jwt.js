@@ -12,3 +12,9 @@ exports.verifyJWT = (req, res, next) => {
     next();
   });
 }
+
+exports.sign = (payload) => {
+  return jwt.sign(payload, process.env.SECRET, {
+    expiresIn: 300 // expires in 5min
+  });
+}
