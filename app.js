@@ -13,7 +13,7 @@ const verifyJWT = require('./src/security/jwt').verifyJWT
 const messagesRouter = require('./src/routes/message');
 const authRouter = require('./src/routes/auth');
 
-const Message = require('./src/models/message');
+const messagesSocket = require('./src/socket/message')
 
 app.use(cors())
 app.use(helmet())
@@ -29,15 +29,7 @@ app.use((req, res) => {
 });
 
 io.on('connection', (socket) => {
-  socket.on('write', (msg) => {
-    const message = new Message({
-      text: msg
-    })
-    message.save((err) => {
-      if (err) return
-    })
-    io.emit('message', message)
-  });
+  messagesSocket(io, socket)
 });
 
 http.listen(process.env.PORT, () => {
