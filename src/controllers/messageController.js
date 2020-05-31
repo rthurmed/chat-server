@@ -9,7 +9,7 @@ exports.list = (req, res) => {
     page: page,
     limit: PAGE_LENGTH,
     populate: [ 'author' ],
-    sort: { timestamp: 'desc' },
+    sort: { createdAt: 'desc' },
     customLabels: { docs: 'list' }
   }
   Message.paginate({}, options, (err, result) => {
